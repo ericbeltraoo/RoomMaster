@@ -3,6 +3,7 @@ package application;
 import entities.Hospede;
 import entities.Quarto;
 import entities.Reserva;
+import util.Faturamento;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -25,9 +26,11 @@ public class Main {
         System.out.println("Digite o nome do 1° hóspede:");
         String tempNomeHospede1 = input.nextLine();
         System.out.println("Digite o cpf do 1° hóspede: ");
-        int tempCpf1 = input.nextInt();
+        String tempCpf1 = input.next();
+        input.nextLine();
         System.out.println("Digite o rg do 1° hóspede: ");
-        int tempRg1 = input.nextInt();
+        String tempRg1 = input.next();
+        input.nextLine();
 
         Hospede hospede1 = new Hospede(tempNomeHospede1,tempCpf1,tempRg1);
 
@@ -35,9 +38,11 @@ public class Main {
         System.out.println("Digite o nome do 2° hóspede:");
         String tempNomeHospede2 = input.nextLine();
         System.out.println("Digite o cpf do 2° hóspede: ");
-        int tempCpf2 = input.nextInt();
+        String tempCpf2 = input.next();
+        input.nextLine();
         System.out.println("Digite o rg do 2° hóspede: ");
-        int tempRg2 = input.nextInt();
+        String tempRg2 = input.next();
+        input.nextLine();
 
         Hospede hospede2 = new Hospede(tempNomeHospede2,tempCpf2,tempRg2);
 
@@ -50,6 +55,7 @@ public class Main {
         }
         System.out.println("Digite o preço da diária: ");
         double tempPrecoDiaria1 = input.nextDouble();
+        input.nextLine();
 
         Quarto quarto1 = new Quarto(tempNumeroQuarto1,tempTipoQuarto1,tempPrecoDiaria1);
 
@@ -62,6 +68,7 @@ public class Main {
         }
         System.out.println("Digite o preço da diária: ");
         double tempPrecoDiaria2 = input.nextDouble();
+        input.nextLine();
 
         Quarto quarto2 = new Quarto(tempNumeroQuarto2,tempTipoQuarto2,tempPrecoDiaria2);
 
@@ -77,10 +84,10 @@ public class Main {
 
         Quarto quarto3 = new Quarto(tempNumeroQuarto3,tempTipoQuarto3,tempPrecoDiaria3);
 
-
-        int menuInterativo = 0;
         Reserva reserva1 = null;
         Reserva reserva2 = null;
+
+        int menuInterativo = 0;
 
         while (menuInterativo != 4) {
 
@@ -100,26 +107,47 @@ public class Main {
                     System.out.println(quarto2);
                     System.out.println("\n---- QUARTO 102 ----");
                     System.out.println(quarto3);
+                    pausar();
                     break;
                 case 2:
                     System.out.println("Digite o seu cpf cadastrado na plataforma: ");
-                    int cpfCadastrado = input.nextInt();
+                    String cpfCadastrado = input.next();
+                    input.nextLine();
 
                     String tempHospedeResp;
 
-                    if (cpfCadastrado == hospede1.getCpf()) {
+                    if (cpfCadastrado.equals(hospede1.getCpf())) {
                         tempHospedeResp = hospede1.getNome();
 
                         System.out.println("Digite o quarto que você deseja reservar: ( 100 / 101 / 102 )");
                         System.out.println("OBS: Verifique a disponibilidade do mesmo digitando 1 no menu iniciar.");
                         int tempQuartoReservado = input.nextInt();
+                        input.nextLine();
 
                         if (tempQuartoReservado == 100) {
-                            quarto1.setStatusAtual("Ocupado");
+                            if(!(quarto1.getStatusAtual().equals("Ocupado"))) {
+                                quarto1.setStatusAtual("Ocupado");
+                            } else {
+                                System.out.println("ERRO: Esse quarto ja está ocupado");
+                                pausar();
+                                continue;
+                            }
                         } else if (tempQuartoReservado == 101) {
-                            quarto2.setStatusAtual("Ocupado");
+                            if(!(quarto2.getStatusAtual().equals("Ocupado"))) {
+                                quarto2.setStatusAtual("Ocupado");
+                            } else {
+                                System.out.println("ERRO: Esse quarto ja está ocupado");
+                                pausar();
+                                continue;
+                            }
                         } else if (tempQuartoReservado == 102) {
-                            quarto3.setStatusAtual("Ocupado");
+                            if(!(quarto3.getStatusAtual().equals("Ocupado"))) {
+                                quarto3.setStatusAtual("Ocupado");
+                            } else {
+                                System.out.println("ERRO: Esse quarto ja está ocupado");
+                                pausar();
+                                continue;
+                            }
                         } else {
                             System.out.println("ERRO: Digite um quarto válido.");
                             continue;
@@ -127,12 +155,13 @@ public class Main {
 
                         System.out.println("Digite a quantidade de dias que você deseja reservar: ");
                         int tempQtdDiariasAgendadas = input.nextInt();
+                        input.nextLine();
 
                         String tempStatusReserva = "Ativa";
 
                         reserva1 = new Reserva(tempHospedeResp,tempQuartoReservado,tempQtdDiariasAgendadas,tempStatusReserva);
 
-                    } else if (cpfCadastrado == hospede2.getCpf()) {
+                    } else if (cpfCadastrado.equals(hospede2.getCpf())) {
                         tempHospedeResp = hospede2.getNome();
 
                         System.out.println("Digite o quarto que você deseja reservar: ( 100 / 101 / 102 )");
@@ -140,11 +169,29 @@ public class Main {
                         int tempQuartoReservado = input.nextInt();
 
                         if (tempQuartoReservado == 100) {
-                            quarto1.setStatusAtual("Ocupado");
+                            if(!(quarto1.getStatusAtual().equals("Ocupado"))) {
+                                quarto1.setStatusAtual("Ocupado");
+                            } else {
+                                System.out.println("ERRO: Esse quarto ja está ocupado");
+                                pausar();
+                                continue;
+                            }
                         } else if (tempQuartoReservado == 101) {
-                            quarto2.setStatusAtual("Ocupado");
+                            if(!(quarto2.getStatusAtual().equals("Ocupado"))) {
+                                quarto2.setStatusAtual("Ocupado");
+                            } else {
+                                System.out.println("ERRO: Esse quarto ja está ocupado");
+                                pausar();
+                                continue;
+                            }
                         } else if (tempQuartoReservado == 102) {
-                            quarto3.setStatusAtual("Ocupado");
+                            if(!(quarto3.getStatusAtual().equals("Ocupado"))) {
+                                quarto3.setStatusAtual("Ocupado");
+                            } else {
+                                System.out.println("ERRO: Esse quarto ja está ocupado");
+                                pausar();
+                                continue;
+                            }
                         } else {
                             System.out.println("ERRO: Digite um quarto válido.");
                             continue;
@@ -165,21 +212,111 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Digite o seu cpf cadastrado na plataforma: ");
-                    int cpfCadastro = input.nextInt();
+                    String cpfCadastro = input.next();
 
-                    if (cpfCadastro == hospede1.getCpf()) {
-                        if(reserva1.getStatusReserva() == "Ativo") {
+                    if (cpfCadastro.equals(hospede1.getCpf())) {
 
-                            // calculos
+                        if(reserva1.getStatusReserva().equals("Ativa")) {
 
+                            if (reserva1.getQuartoReservado() == 100) {
+
+                                if (quarto1.getTipo().equals("suite")) {
+                                    Faturamento.calculoTaxa(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto1.getTipo()));
+                                    pausar();
+                                    quarto1.setStatusAtual("Disponivel");
+                                } else if (quarto1.getTipo().equals("standard")) {
+                                    Faturamento.calculoTotalDiarias(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiro(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto1.getTipo()));
+                                    pausar();
+                                    quarto1.setStatusAtual("Disponivel");
+
+                                }
+
+                            } else if (reserva1.getQuartoReservado() == 101) {
+
+                                if (quarto2.getTipo().equals("suite")) {
+                                    Faturamento.calculoTaxa(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto2.getTipo()));
+                                    pausar();
+                                    quarto2.setStatusAtual("Disponivel");
+                                } else if (quarto2.getTipo().equals("standard")) {
+                                    Faturamento.calculoTotalDiarias(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiro(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto2.getTipo()));
+                                    pausar();
+                                    quarto2.setStatusAtual("Disponivel");
+
+                                }
+
+                            } else if (reserva1.getQuartoReservado() == 102) {
+
+                                if (quarto3.getTipo().equals("suite")) {
+                                    Faturamento.calculoTaxa(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto3.getTipo()));
+                                    pausar();
+                                    quarto3.setStatusAtual("Disponivel");
+                                } else if (quarto3.getTipo().equals("standard")) {
+                                    Faturamento.calculoTotalDiarias(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiro(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto3.getTipo()));
+                                    pausar();
+                                    quarto3.setStatusAtual("Disponivel");
+
+                                }
+
+                            }
+                            reserva1.setStatusReserva("Finalizada");
                         } else {
                             System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
                         }
-                    } else if (cpfCadastro == hospede2.getCpf()) {
-                        if(reserva2.getStatusReserva() == "Ativo") {
+                    } else if (cpfCadastro.equals(hospede2.getCpf())) {
+                        if(reserva2.getStatusReserva().equals("Ativa")) {
+                            if (reserva2.getQuartoReservado() == 100) {
 
-                            // calculos
+                                if (quarto1.getTipo().equals("suite")) {
+                                    Faturamento.calculoTaxa(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto1.getTipo()));
+                                    pausar();
+                                    quarto1.setStatusAtual("Disponivel");
+                                } else if (quarto1.getTipo().equals("standard")) {
+                                    Faturamento.calculoTotalDiarias(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiro(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto1.getTipo()));
+                                    pausar();
+                                    quarto1.setStatusAtual("Disponivel");
 
+                                }
+
+                            } else if (reserva2.getQuartoReservado() == 101) {
+
+                                if (quarto2.getTipo().equals("suite")) {
+                                    Faturamento.calculoTaxa(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto2.getTipo()));
+                                    pausar();
+                                    quarto2.setStatusAtual("Disponivel");
+                                } else if (quarto2.getTipo().equals("standard")) {
+                                    Faturamento.calculoTotalDiarias(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiro(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto2.getTipo()));
+                                    pausar();
+                                    quarto2.setStatusAtual("Disponivel");
+
+                                }
+
+                            } else if (reserva2.getQuartoReservado() == 102) {
+
+                                if (quarto3.getTipo().equals("suite")) {
+                                    Faturamento.calculoTaxa(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto3.getTipo()));
+                                    pausar();
+                                    quarto3.setStatusAtual("Disponivel");
+                                } else if (quarto3.getTipo().equals("standard")) {
+                                    Faturamento.calculoTotalDiarias(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                    System.out.println(Faturamento.relatorioFinanceiro(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto3.getTipo()));
+                                    pausar();
+                                    quarto3.setStatusAtual("Disponivel");
+
+                                }
+
+                            }
+                            reserva2.setStatusReserva("Finalizada");
                         } else {
                             System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
                         }

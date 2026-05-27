@@ -44,9 +44,9 @@ public class Quarto {
     @Override
     public String toString() {
         return "Numero do quarto: "+numero
-                +"Tipo do quarto: "+tipo
-                +"Preço da Diária: "+precoDiaria
-                +"Status: "+statusAtual;
+                +"\nTipo do quarto: "+tipo
+                +"\n" +String.format("Preço do Quarto: R$ %.2f",precoDiaria)
+                +"\nStatus: "+statusAtual;
     }
 
 }

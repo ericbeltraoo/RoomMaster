@@ -2,9 +2,9 @@ package entities;
 
 public class Hospede {
     private String nome;
-    private int cpf, rg;
+    private String cpf, rg;
 
-    public Hospede(String nome, int cpf , int rg) {
+    public Hospede(String nome, String cpf , String rg) {
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
@@ -14,11 +14,11 @@ public class Hospede {
         return nome;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public int getRg() {
+    public String getRg() {
         return rg;
     }
 
