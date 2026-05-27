@@ -32,8 +32,8 @@ public class Main {
         Quarto quarto1 = null;
         Quarto quarto2 = null;
         Quarto quarto3 = null;
-        Hospede hospede1 = null;
-        Hospede hospede2 = null;
+        Hospede hospede1;
+        Hospede hospede2;
 
         System.out.println("\n---- 1° HOSPEDE ----\n");
         System.out.println("Digite o nome do 1° hóspede:");
@@ -142,6 +142,34 @@ public class Main {
                     if (cpfCadastrado.equals(hospede1.getCpf())) {
                         tempHospedeResp = hospede1.getNome();
 
+                        if (reserva1 != null && hospede1.getNome().equals(reserva1.getHospedeResponsavel())) {
+                            System.out.println("O cpf cadastrado ja tem uma reserva em andamento.");
+                            pausar();
+                            System.out.println("---- MENU INTERATIVO ----");
+                            System.out.println("1 - Cancelar reserva anterior");
+                            System.out.println("2 - Voltar ao menu principal");
+                            System.out.println("Selecione uma das opções acima: ");
+                            int opcaoMenuInterativo = input.nextInt();
+
+                            switch (opcaoMenuInterativo) {
+                                case 1:
+                                    if (reserva1.getQuartoReservado() == 100) {
+                                        quarto1.setStatusAtual("Disponível");
+                                    } else if (reserva1.getQuartoReservado() == 101) {
+                                        quarto2.setStatusAtual("Disponível");
+                                    } else if (reserva1.getQuartoReservado() == 102) {
+                                        quarto3.setStatusAtual("Disponível");
+                                    }
+                                    System.out.println("Cancelamento efetuado com sucesso...");
+                                    pausar();
+                                    continue;
+                                case 2:
+                                    System.out.println("Redirecionando...");
+                                    pausar();
+                                    continue;
+                            }
+                        }
+
                         System.out.println("Digite o quarto que você deseja reservar: ( 100 / 101 / 102 )");
                         System.out.println("OBS: Verifique a disponibilidade do mesmo digitando 1 no menu iniciar.");
                         int tempQuartoReservado = input.nextInt();
@@ -183,6 +211,7 @@ public class Main {
                         String tempStatusReserva = "Ativa";
 
                         reserva1 = new Reserva(tempHospedeResp,tempQuartoReservado,tempQtdDiariasAgendadas,tempStatusReserva);
+
 
                     } else if (cpfCadastrado.equals(hospede2.getCpf())) {
                         tempHospedeResp = hospede2.getNome();
@@ -241,7 +270,7 @@ public class Main {
 
                         if (cpfCadastro.equals(hospede1.getCpf())) {
 
-                            if(reserva1.getStatusReserva().equals("Ativa")) {
+                            if(reserva1 != null && reserva1.getStatusReserva().equals("Ativa")) {
 
                                 if (reserva1.getQuartoReservado() == 100) {
 
@@ -389,9 +418,10 @@ public class Main {
                                 reserva1.setStatusReserva("Finalizada");
                             } else {
                                 System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
+                                pausar();
                             }
                         } else if (cpfCadastro.equals(hospede2.getCpf())) {
-                            if(reserva2.getStatusReserva().equals("Ativa")) {
+                            if(reserva2 != null && reserva2.getStatusReserva().equals("Ativa")) {
                                 if (reserva2.getQuartoReservado() == 100) {
 
                                     if (quarto1.getTipo().equals("suite")) {
@@ -528,6 +558,7 @@ public class Main {
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
+                                            pausar();
                                             continue;
                                         }
 
@@ -537,7 +568,12 @@ public class Main {
                                 reserva2.setStatusReserva("Finalizada");
                             } else {
                                 System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
+                                pausar();
                             }
+                        } else {
+                            System.out.println("ERRO: Digite um cpf válido.");
+                            pausar();
+                            continue;
                         }
                     break;
                 case 4:
