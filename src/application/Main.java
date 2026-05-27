@@ -22,67 +22,90 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
+        boolean continuar = true;
+
+        String tempNomeHospede1, tempCpf1, tempRg1, tempNomeHospede2, tempCpf2, tempRg2;
+        String tempTipoQuarto1, tempTipoQuarto2, tempTipoQuarto3;
+        double tempPrecoDiaria1, tempPrecoDiaria2, tempPrecoDiaria3;
+        int tempNumeroQuarto1, tempNumeroQuarto2, tempNumeroQuarto3;
+
+        Quarto quarto1 = null;
+        Quarto quarto2 = null;
+        Quarto quarto3 = null;
+        Hospede hospede1 = null;
+        Hospede hospede2 = null;
+
         System.out.println("\n---- 1° HOSPEDE ----\n");
         System.out.println("Digite o nome do 1° hóspede:");
-        String tempNomeHospede1 = input.nextLine();
+        tempNomeHospede1 = input.nextLine();
         System.out.println("Digite o cpf do 1° hóspede: ");
-        String tempCpf1 = input.next();
+        tempCpf1 = input.next();
         input.nextLine();
         System.out.println("Digite o rg do 1° hóspede: ");
-        String tempRg1 = input.next();
+        tempRg1 = input.next();
         input.nextLine();
 
-        Hospede hospede1 = new Hospede(tempNomeHospede1,tempCpf1,tempRg1);
+        hospede1 = new Hospede(tempNomeHospede1,tempCpf1,tempRg1);
 
         System.out.println("\n---- 2° HOSPEDE ----\n");
         System.out.println("Digite o nome do 2° hóspede:");
-        String tempNomeHospede2 = input.nextLine();
+        tempNomeHospede2 = input.nextLine();
         System.out.println("Digite o cpf do 2° hóspede: ");
-        String tempCpf2 = input.next();
+        tempCpf2 = input.next();
         input.nextLine();
         System.out.println("Digite o rg do 2° hóspede: ");
-        String tempRg2 = input.next();
+        tempRg2 = input.next();
         input.nextLine();
 
-        Hospede hospede2 = new Hospede(tempNomeHospede2,tempCpf2,tempRg2);
+        hospede2 = new Hospede(tempNomeHospede2,tempCpf2,tempRg2);
 
-        System.out.println("\n---- 1° QUARTO ----\n");
-        int tempNumeroQuarto1 = 100;
-        System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
-        String tempTipoQuarto1 = input.nextLine().toLowerCase();
-        if(!(tempTipoQuarto1.equals("standard") || tempTipoQuarto1.equals("suite"))) {
-            System.out.println("ERRO: Digite um tipo de quarto válido.");
+        while (continuar) {
+
+            System.out.println("\n---- 1° QUARTO ----\n");
+            tempNumeroQuarto1 = 100;
+            System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
+            tempTipoQuarto1 = input.nextLine().toLowerCase();
+            if(!(tempTipoQuarto1.equals("standard") || tempTipoQuarto1.equals("suite"))) {
+                System.out.println("ERRO: Digite um tipo de quarto válido.");
+                pausar();
+                continue;
+            }
+            System.out.println("Digite o preço da diária: ");
+            tempPrecoDiaria1 = input.nextDouble();
+            input.nextLine();
+
+            quarto1 = new Quarto(tempNumeroQuarto1,tempTipoQuarto1,tempPrecoDiaria1);
+
+            System.out.println("\n---- 2° QUARTO ----\n");
+            tempNumeroQuarto2 = 101;
+            System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
+            tempTipoQuarto2 = input.nextLine().toLowerCase();
+            if(!(tempTipoQuarto2.equals("standard") || tempTipoQuarto2.equals("suite"))) {
+                System.out.println("ERRO: Digite um tipo de quarto válido.");
+                pausar();
+                continue;
+            }
+            System.out.println("Digite o preço da diária: ");
+            tempPrecoDiaria2 = input.nextDouble();
+            input.nextLine();
+
+            quarto2 = new Quarto(tempNumeroQuarto2,tempTipoQuarto2,tempPrecoDiaria2);
+
+            System.out.println("\n---- 3° QUARTO ----\n");
+            tempNumeroQuarto3 = 102;
+            System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
+            tempTipoQuarto3 = input.nextLine().toLowerCase();
+            if(!(tempTipoQuarto3.equals("standard") || tempTipoQuarto3.equals("suite"))) {
+                System.out.println("ERRO: Digite um tipo de quarto válido.");
+                pausar();
+                continue;
+            }
+            System.out.println("Digite o preço da diária: ");
+            tempPrecoDiaria3 = input.nextDouble();
+
+            quarto3 = new Quarto(tempNumeroQuarto3,tempTipoQuarto3,tempPrecoDiaria3);
+            continuar = false;
         }
-        System.out.println("Digite o preço da diária: ");
-        double tempPrecoDiaria1 = input.nextDouble();
-        input.nextLine();
-
-        Quarto quarto1 = new Quarto(tempNumeroQuarto1,tempTipoQuarto1,tempPrecoDiaria1);
-
-        System.out.println("\n---- 2° QUARTO ----\n");
-        int tempNumeroQuarto2 = 101;
-        System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
-        String tempTipoQuarto2 = input.nextLine().toLowerCase();
-        if(!(tempTipoQuarto2.equals("standard") || tempTipoQuarto2.equals("suite"))) {
-            System.out.println("ERRO: Digite um tipo de quarto válido.");
-        }
-        System.out.println("Digite o preço da diária: ");
-        double tempPrecoDiaria2 = input.nextDouble();
-        input.nextLine();
-
-        Quarto quarto2 = new Quarto(tempNumeroQuarto2,tempTipoQuarto2,tempPrecoDiaria2);
-
-        System.out.println("\n---- 3° QUARTO ----\n");
-        int tempNumeroQuarto3 = 102;
-        System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
-        String tempTipoQuarto3 = input.nextLine().toLowerCase();
-        if(!(tempTipoQuarto3.equals("standard") || tempTipoQuarto3.equals("suite"))) {
-            System.out.println("ERRO: Digite um tipo de quarto válido.");
-        }
-        System.out.println("Digite o preço da diária: ");
-        double tempPrecoDiaria3 = input.nextDouble();
-
-        Quarto quarto3 = new Quarto(tempNumeroQuarto3,tempTipoQuarto3,tempPrecoDiaria3);
 
         Reserva reserva1 = null;
         Reserva reserva2 = null;
@@ -211,116 +234,311 @@ public class Main {
 
                     break;
                 case 3:
-                    System.out.println("Digite o seu cpf cadastrado na plataforma: ");
-                    String cpfCadastro = input.next();
 
-                    if (cpfCadastro.equals(hospede1.getCpf())) {
+                    // fazer com que nao acesse sem ter criado uma reserva, verificar para cada cpf distinto
+                        System.out.println("Digite o seu cpf cadastrado na plataforma: ");
+                        String cpfCadastro = input.next();
 
-                        if(reserva1.getStatusReserva().equals("Ativa")) {
+                        if (cpfCadastro.equals(hospede1.getCpf())) {
 
-                            if (reserva1.getQuartoReservado() == 100) {
+                            if(reserva1.getStatusReserva().equals("Ativa")) {
 
-                                if (quarto1.getTipo().equals("suite")) {
-                                    Faturamento.calculoTaxa(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto1.getTipo()));
-                                    pausar();
-                                    quarto1.setStatusAtual("Disponivel");
-                                } else if (quarto1.getTipo().equals("standard")) {
-                                    Faturamento.calculoTotalDiarias(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiro(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto1.getTipo()));
-                                    pausar();
-                                    quarto1.setStatusAtual("Disponivel");
+                                if (reserva1.getQuartoReservado() == 100) {
+
+                                    if (quarto1.getTipo().equals("suite")) {
+                                        Faturamento.calculoTaxa(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto1.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto1.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+
+                                    } else if (quarto1.getTipo().equals("standard")) {
+                                        Faturamento.calculoTotalDiarias(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiro(quarto1.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto1.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto1.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+
+                                    }
+
+                                } else if (reserva1.getQuartoReservado() == 101) {
+
+                                    if (quarto2.getTipo().equals("suite")) {
+                                        Faturamento.calculoTaxa(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto2.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto2.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+                                    } else if (quarto2.getTipo().equals("standard")) {
+                                        Faturamento.calculoTotalDiarias(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiro(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto2.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto2.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+
+                                    }
+
+                                } else if (reserva1.getQuartoReservado() == 102) {
+
+                                    if (quarto3.getTipo().equals("suite")) {
+                                        Faturamento.calculoTaxa(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto3.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto3.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+                                    } else if (quarto3.getTipo().equals("standard")) {
+                                        Faturamento.calculoTotalDiarias(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiro(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto3.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto3.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+
+                                    }
 
                                 }
-
-                            } else if (reserva1.getQuartoReservado() == 101) {
-
-                                if (quarto2.getTipo().equals("suite")) {
-                                    Faturamento.calculoTaxa(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto2.getTipo()));
-                                    pausar();
-                                    quarto2.setStatusAtual("Disponivel");
-                                } else if (quarto2.getTipo().equals("standard")) {
-                                    Faturamento.calculoTotalDiarias(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiro(quarto2.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto2.getTipo()));
-                                    pausar();
-                                    quarto2.setStatusAtual("Disponivel");
-
-                                }
-
-                            } else if (reserva1.getQuartoReservado() == 102) {
-
-                                if (quarto3.getTipo().equals("suite")) {
-                                    Faturamento.calculoTaxa(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto3.getTipo()));
-                                    pausar();
-                                    quarto3.setStatusAtual("Disponivel");
-                                } else if (quarto3.getTipo().equals("standard")) {
-                                    Faturamento.calculoTotalDiarias(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiro(quarto3.getPrecoDiaria(), reserva1.getQtdDiariasAgendadas(), quarto3.getTipo()));
-                                    pausar();
-                                    quarto3.setStatusAtual("Disponivel");
-
-                                }
-
+                                reserva1.setStatusReserva("Finalizada");
+                            } else {
+                                System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
                             }
-                            reserva1.setStatusReserva("Finalizada");
-                        } else {
-                            System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
-                        }
-                    } else if (cpfCadastro.equals(hospede2.getCpf())) {
-                        if(reserva2.getStatusReserva().equals("Ativa")) {
-                            if (reserva2.getQuartoReservado() == 100) {
+                        } else if (cpfCadastro.equals(hospede2.getCpf())) {
+                            if(reserva2.getStatusReserva().equals("Ativa")) {
+                                if (reserva2.getQuartoReservado() == 100) {
 
-                                if (quarto1.getTipo().equals("suite")) {
-                                    Faturamento.calculoTaxa(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto1.getTipo()));
-                                    pausar();
-                                    quarto1.setStatusAtual("Disponivel");
-                                } else if (quarto1.getTipo().equals("standard")) {
-                                    Faturamento.calculoTotalDiarias(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiro(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto1.getTipo()));
-                                    pausar();
-                                    quarto1.setStatusAtual("Disponivel");
+                                    if (quarto1.getTipo().equals("suite")) {
+                                        Faturamento.calculoTaxa(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto1.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto1.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+                                    } else if (quarto1.getTipo().equals("standard")) {
+                                        Faturamento.calculoTotalDiarias(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiro(quarto1.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto1.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto1.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+
+                                    }
+
+                                } else if (reserva2.getQuartoReservado() == 101) {
+
+                                    if (quarto2.getTipo().equals("suite")) {
+                                        Faturamento.calculoTaxa(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto2.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto2.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+                                    } else if (quarto2.getTipo().equals("standard")) {
+                                        Faturamento.calculoTotalDiarias(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiro(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto2.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto2.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+
+                                    }
+
+                                } else if (reserva2.getQuartoReservado() == 102) {
+
+                                    if (quarto3.getTipo().equals("suite")) {
+                                        Faturamento.calculoTaxa(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto3.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto3.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+                                    } else if (quarto3.getTipo().equals("standard")) {
+                                        Faturamento.calculoTotalDiarias(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
+                                        System.out.println(Faturamento.relatorioFinanceiro(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto3.getTipo()));
+
+                                        System.out.println("\n---- PAGAMENTOS ----\n");
+                                        System.out.println("1 - Para realizar o pagamento");
+                                        System.out.println("2 - Para voltar ao menu de interação");
+                                        int opcaoPagamento = input.nextInt();
+
+                                        if (opcaoPagamento == 1) {
+                                            System.out.println("Pagamento realizado com sucesso!");
+                                            quarto3.setStatusAtual("Disponivel");
+                                            pausar();
+                                        } else if (opcaoPagamento == 2) {
+                                            System.out.println("Redirecionando...");
+                                            pausar();
+                                            continue;
+                                        } else {
+                                            System.out.println("ERRO: Digite uma opção válida.");
+                                            continue;
+                                        }
+
+                                    }
 
                                 }
-
-                            } else if (reserva2.getQuartoReservado() == 101) {
-
-                                if (quarto2.getTipo().equals("suite")) {
-                                    Faturamento.calculoTaxa(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto2.getTipo()));
-                                    pausar();
-                                    quarto2.setStatusAtual("Disponivel");
-                                } else if (quarto2.getTipo().equals("standard")) {
-                                    Faturamento.calculoTotalDiarias(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiro(quarto2.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto2.getTipo()));
-                                    pausar();
-                                    quarto2.setStatusAtual("Disponivel");
-
-                                }
-
-                            } else if (reserva2.getQuartoReservado() == 102) {
-
-                                if (quarto3.getTipo().equals("suite")) {
-                                    Faturamento.calculoTaxa(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiroTaxa(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto3.getTipo()));
-                                    pausar();
-                                    quarto3.setStatusAtual("Disponivel");
-                                } else if (quarto3.getTipo().equals("standard")) {
-                                    Faturamento.calculoTotalDiarias(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas());
-                                    System.out.println(Faturamento.relatorioFinanceiro(quarto3.getPrecoDiaria(), reserva2.getQtdDiariasAgendadas(), quarto3.getTipo()));
-                                    pausar();
-                                    quarto3.setStatusAtual("Disponivel");
-
-                                }
-
+                                reserva2.setStatusReserva("Finalizada");
+                            } else {
+                                System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
                             }
-                            reserva2.setStatusReserva("Finalizada");
-                        } else {
-                            System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
                         }
-                    }
                     break;
                 case 4:
                     menuInterativo = 4;

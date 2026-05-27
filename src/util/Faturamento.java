@@ -27,4 +27,3 @@ public class Faturamento {
     }
 }
 
-// colocar para escrever novamente apos erros com else fora do while e verificar os de dentro do while
