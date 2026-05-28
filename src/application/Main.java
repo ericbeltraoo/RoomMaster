@@ -16,22 +16,37 @@ public class Main {
         pausar.nextLine();
     }
 
+    public static String cadastrarTipoQuarto(Scanner input) {
+        boolean passar = true;
+        String tipo = null;
+
+        while (passar) {
+            System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
+            tipo = input.nextLine().toLowerCase();
+            if(!(tipo.equals("standard") || tipo.equals("suite"))) {
+                System.out.println("ERRO: Digite um tipo de quarto válido.");
+                pausar();
+            } else {
+                passar = false;
+            }
+        }
+        return tipo;
+    }
+
     public static void main(String[] args) {
 
         Locale.setDefault(Locale.US);
 
         Scanner input = new Scanner(System.in);
 
-        boolean continuar = true;
-
         String tempNomeHospede1, tempCpf1, tempRg1, tempNomeHospede2, tempCpf2, tempRg2;
         String tempTipoQuarto1, tempTipoQuarto2, tempTipoQuarto3;
         double tempPrecoDiaria1, tempPrecoDiaria2, tempPrecoDiaria3;
         int tempNumeroQuarto1, tempNumeroQuarto2, tempNumeroQuarto3;
 
-        Quarto quarto1 = null;
-        Quarto quarto2 = null;
-        Quarto quarto3 = null;
+        Quarto quarto1;
+        Quarto quarto2;
+        Quarto quarto3;
         Hospede hospede1;
         Hospede hospede2;
 
@@ -59,17 +74,11 @@ public class Main {
 
         hospede2 = new Hospede(tempNomeHospede2,tempCpf2,tempRg2);
 
-        while (continuar) {
-
             System.out.println("\n---- 1° QUARTO ----\n");
             tempNumeroQuarto1 = 100;
-            System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
-            tempTipoQuarto1 = input.nextLine().toLowerCase();
-            if(!(tempTipoQuarto1.equals("standard") || tempTipoQuarto1.equals("suite"))) {
-                System.out.println("ERRO: Digite um tipo de quarto válido.");
-                pausar();
-                continue;
-            }
+
+            tempTipoQuarto1 = cadastrarTipoQuarto(input);
+
             System.out.println("Digite o preço da diária: ");
             tempPrecoDiaria1 = input.nextDouble();
             input.nextLine();
@@ -78,13 +87,9 @@ public class Main {
 
             System.out.println("\n---- 2° QUARTO ----\n");
             tempNumeroQuarto2 = 101;
-            System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
-            tempTipoQuarto2 = input.nextLine().toLowerCase();
-            if(!(tempTipoQuarto2.equals("standard") || tempTipoQuarto2.equals("suite"))) {
-                System.out.println("ERRO: Digite um tipo de quarto válido.");
-                pausar();
-                continue;
-            }
+
+            tempTipoQuarto2 = cadastrarTipoQuarto(input);
+
             System.out.println("Digite o preço da diária: ");
             tempPrecoDiaria2 = input.nextDouble();
             input.nextLine();
@@ -93,19 +98,13 @@ public class Main {
 
             System.out.println("\n---- 3° QUARTO ----\n");
             tempNumeroQuarto3 = 102;
-            System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
-            tempTipoQuarto3 = input.nextLine().toLowerCase();
-            if(!(tempTipoQuarto3.equals("standard") || tempTipoQuarto3.equals("suite"))) {
-                System.out.println("ERRO: Digite um tipo de quarto válido.");
-                pausar();
-                continue;
-            }
+
+            tempTipoQuarto3 = cadastrarTipoQuarto(input);
+
             System.out.println("Digite o preço da diária: ");
             tempPrecoDiaria3 = input.nextDouble();
 
             quarto3 = new Quarto(tempNumeroQuarto3,tempTipoQuarto3,tempPrecoDiaria3);
-            continuar = false;
-        }
 
         Reserva reserva1 = null;
         Reserva reserva2 = null;
