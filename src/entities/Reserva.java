@@ -37,4 +37,12 @@ public class Reserva {
     public void setStatusReserva(String statusReserva) {
         this.statusReserva = statusReserva;
     }
+
+    @Override
+    public String toString() {
+        return "Hospede Responsável: "+this.hospedeResponsavel
+                +"\nQuarto Reservado: "+this.quartoReservado
+                +"\nQuantidade de diárias: "+this.qtdDiariasAgendadas
+                +"\nStatus da reserva: "+this.statusReserva;
+    }
 }

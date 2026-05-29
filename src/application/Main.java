@@ -10,27 +10,32 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void pausar() {
+    public static void pausar(Scanner pausar) {
         System.out.println("Pressione enter para continuar... ");
-        Scanner pausar = new Scanner(System.in);
         pausar.nextLine();
     }
 
-    public static String cadastrarTipoQuarto(Scanner input) {
+    public static Quarto cadastrarQuarto(Scanner input, int numero) {
         boolean passar = true;
         String tipo = null;
+        double precoDiaria;
+        Quarto quartoConstruido = null;
 
         while (passar) {
             System.out.println("Digite o tipo do quarto: (Standard ou Suite)");
             tipo = input.nextLine().toLowerCase();
             if(!(tipo.equals("standard") || tipo.equals("suite"))) {
                 System.out.println("ERRO: Digite um tipo de quarto válido.");
-                pausar();
+                pausar(input);
             } else {
+                System.out.println("Digite o preço da diária: ");
+                precoDiaria = input.nextDouble();
+                input.nextLine();
+                quartoConstruido = new Quarto(numero,tipo,precoDiaria);
                 passar = false;
             }
         }
-        return tipo;
+        return quartoConstruido;
     }
 
     public static void main(String[] args) {
@@ -44,9 +49,6 @@ public class Main {
         double tempPrecoDiaria1, tempPrecoDiaria2, tempPrecoDiaria3;
         int tempNumeroQuarto1, tempNumeroQuarto2, tempNumeroQuarto3;
 
-        Quarto quarto1;
-        Quarto quarto2;
-        Quarto quarto3;
         Hospede hospede1;
         Hospede hospede2;
 
@@ -76,49 +78,31 @@ public class Main {
 
             System.out.println("\n---- 1° QUARTO ----\n");
             tempNumeroQuarto1 = 100;
-
-            tempTipoQuarto1 = cadastrarTipoQuarto(input);
-
-            System.out.println("Digite o preço da diária: ");
-            tempPrecoDiaria1 = input.nextDouble();
-            input.nextLine();
-
-            quarto1 = new Quarto(tempNumeroQuarto1,tempTipoQuarto1,tempPrecoDiaria1);
+            Quarto quarto1 = cadastrarQuarto(input,tempNumeroQuarto1);
 
             System.out.println("\n---- 2° QUARTO ----\n");
             tempNumeroQuarto2 = 101;
-
-            tempTipoQuarto2 = cadastrarTipoQuarto(input);
-
-            System.out.println("Digite o preço da diária: ");
-            tempPrecoDiaria2 = input.nextDouble();
-            input.nextLine();
-
-            quarto2 = new Quarto(tempNumeroQuarto2,tempTipoQuarto2,tempPrecoDiaria2);
+            Quarto quarto2 = cadastrarQuarto(input,tempNumeroQuarto2);
 
             System.out.println("\n---- 3° QUARTO ----\n");
             tempNumeroQuarto3 = 102;
+            Quarto quarto3 = cadastrarQuarto(input,tempNumeroQuarto3);
 
-            tempTipoQuarto3 = cadastrarTipoQuarto(input);
-
-            System.out.println("Digite o preço da diária: ");
-            tempPrecoDiaria3 = input.nextDouble();
-
-            quarto3 = new Quarto(tempNumeroQuarto3,tempTipoQuarto3,tempPrecoDiaria3);
 
         Reserva reserva1 = null;
         Reserva reserva2 = null;
 
         int menuInterativo = 0;
 
-        while (menuInterativo != 5) {
+        while (menuInterativo != 6) {
 
             System.out.println("---- MENU INTERATIVO ----");
             System.out.println("1 - Visualizar Quartos");
             System.out.println("2 - Criar Reserva");
             System.out.println("3 - Realizar Checkout");
             System.out.println("4 - Cancelar Reserva");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Visualizar reservas");
+            System.out.println("6 - Sair");
             System.out.println("Digite uma das opções acima: ");
             menuInterativo = input.nextInt();
 
@@ -130,7 +114,7 @@ public class Main {
                     System.out.println(quarto2);
                     System.out.println("\n---- QUARTO 102 ----");
                     System.out.println(quarto3);
-                    pausar();
+                    pausar(input);
                     break;
                 case 2:
                     System.out.println("Digite o seu cpf cadastrado na plataforma: ");
@@ -142,9 +126,9 @@ public class Main {
                     if (cpfCadastrado.equals(hospede1.getCpf())) {
                         tempHospedeResp = hospede1.getNome();
 
-                        if (reserva1 != null && hospede1.getNome().equals(reserva1.getHospedeResponsavel())) {
+                        if (reserva1 != null && reserva1.getStatusReserva().equals("Ativa")) {
                             System.out.println("O cpf cadastrado ja tem uma reserva em andamento.");
-                            pausar();
+                            pausar(input);
                             System.out.println("---- MENU INTERATIVO ----");
                             System.out.println("1 - Cancelar reserva anterior");
                             System.out.println("2 - Voltar ao menu principal");
@@ -154,19 +138,19 @@ public class Main {
                             switch (opcaoMenuInterativo) {
                                 case 1:
                                     if (reserva1.getQuartoReservado() == 100) {
-                                        quarto1.setStatusAtual("Disponível");
+                                        quarto1.setStatusAtual("Disponivel");
                                     } else if (reserva1.getQuartoReservado() == 101) {
-                                        quarto2.setStatusAtual("Disponível");
+                                        quarto2.setStatusAtual("Disponivel");
                                     } else if (reserva1.getQuartoReservado() == 102) {
-                                        quarto3.setStatusAtual("Disponível");
+                                        quarto3.setStatusAtual("Disponivel");
                                     }
-                                    reserva1 = null;
-                                    System.out.println("Cancelamento efetuado com sucesso...");
-                                    pausar();
+                                    reserva1.setStatusReserva("Cancelada");
+                                    System.out.println("Cancelamento efetuado com sucesso!");
+                                    pausar(input);
                                     continue;
                                 case 2:
                                     System.out.println("Redirecionando...");
-                                    pausar();
+                                    pausar(input);
                                     continue;
                             }
                         }
@@ -181,7 +165,7 @@ public class Main {
                                 quarto1.setStatusAtual("Ocupado");
                             } else {
                                 System.out.println("ERRO: Esse quarto ja está ocupado");
-                                pausar();
+                                pausar(input);
                                 continue;
                             }
                         } else if (tempQuartoReservado == 101) {
@@ -189,7 +173,7 @@ public class Main {
                                 quarto2.setStatusAtual("Ocupado");
                             } else {
                                 System.out.println("ERRO: Esse quarto ja está ocupado");
-                                pausar();
+                                pausar(input);
                                 continue;
                             }
                         } else if (tempQuartoReservado == 102) {
@@ -197,7 +181,7 @@ public class Main {
                                 quarto3.setStatusAtual("Ocupado");
                             } else {
                                 System.out.println("ERRO: Esse quarto ja está ocupado");
-                                pausar();
+                                pausar(input);
                                 continue;
                             }
                         } else {
@@ -217,9 +201,9 @@ public class Main {
                     } else if (cpfCadastrado.equals(hospede2.getCpf())) {
                         tempHospedeResp = hospede2.getNome();
 
-                        if (reserva2 != null && hospede2.getNome().equals(reserva2.getHospedeResponsavel())) {
+                        if (reserva2 != null && reserva2.getStatusReserva().equals("Ativa")) {
                             System.out.println("O cpf cadastrado ja tem uma reserva em andamento.");
-                            pausar();
+                            pausar(input);
                             System.out.println("---- MENU INTERATIVO ----");
                             System.out.println("1 - Cancelar reserva anterior");
                             System.out.println("2 - Voltar ao menu principal");
@@ -229,19 +213,19 @@ public class Main {
                             switch (opcaoMenuInterativo) {
                                 case 1:
                                     if (reserva2.getQuartoReservado() == 100) {
-                                        quarto1.setStatusAtual("Disponível");
+                                        quarto1.setStatusAtual("Disponivel");
                                     } else if (reserva2.getQuartoReservado() == 101) {
-                                        quarto2.setStatusAtual("Disponível");
+                                        quarto2.setStatusAtual("Disponivel");
                                     } else if (reserva2.getQuartoReservado() == 102) {
-                                        quarto3.setStatusAtual("Disponível");
+                                        quarto3.setStatusAtual("Disponivel");
                                     }
-                                    reserva2 = null;
-                                    System.out.println("Cancelamento efetuado com sucesso...");
-                                    pausar();
+                                    reserva2.setStatusReserva("Cancelada");
+                                    System.out.println("Cancelamento efetuado com sucesso!");
+                                    pausar(input);
                                     continue;
                                 case 2:
                                     System.out.println("Redirecionando...");
-                                    pausar();
+                                    pausar(input);
                                     continue;
                             }
                         }
@@ -249,13 +233,14 @@ public class Main {
                         System.out.println("Digite o quarto que você deseja reservar: ( 100 / 101 / 102 )");
                         System.out.println("OBS: Verifique a disponibilidade do mesmo digitando 1 no menu iniciar.");
                         int tempQuartoReservado = input.nextInt();
+                        input.nextLine();
 
                         if (tempQuartoReservado == 100) {
                             if(!(quarto1.getStatusAtual().equals("Ocupado"))) {
                                 quarto1.setStatusAtual("Ocupado");
                             } else {
                                 System.out.println("ERRO: Esse quarto ja está ocupado");
-                                pausar();
+                                pausar(input);
                                 continue;
                             }
                         } else if (tempQuartoReservado == 101) {
@@ -263,7 +248,7 @@ public class Main {
                                 quarto2.setStatusAtual("Ocupado");
                             } else {
                                 System.out.println("ERRO: Esse quarto ja está ocupado");
-                                pausar();
+                                pausar(input);
                                 continue;
                             }
                         } else if (tempQuartoReservado == 102) {
@@ -271,7 +256,7 @@ public class Main {
                                 quarto3.setStatusAtual("Ocupado");
                             } else {
                                 System.out.println("ERRO: Esse quarto ja está ocupado");
-                                pausar();
+                                pausar(input);
                                 continue;
                             }
                         } else {
@@ -287,7 +272,7 @@ public class Main {
                         reserva2 = new Reserva(tempHospedeResp,tempQuartoReservado,tempQtdDiariasAgendadas,tempStatusReserva);
 
                     } else {
-                        System.out.println("ERRO: Digite um CPF válido.");
+                        System.out.println("ERRO: O cpf inserido não esta em nosso banco de dados.");
                         continue;
                     }
 
@@ -313,11 +298,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva1.setStatusReserva("Finalizada");
                                             quarto1.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -335,11 +321,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva1.setStatusReserva("Finalizada");
                                             quarto1.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -361,11 +348,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva1.setStatusReserva("Finalizada");
                                             quarto2.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -382,11 +370,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva1.setStatusReserva("Finalizada");
                                             quarto2.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -408,11 +397,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva1.setStatusReserva("Finalizada");
                                             quarto3.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -429,11 +419,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva1.setStatusReserva("Finalizada");
                                             quarto3.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -443,10 +434,9 @@ public class Main {
                                     }
 
                                 }
-                                reserva1.setStatusReserva("Finalizada");
                             } else {
-                                System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
-                                pausar();
+                                System.out.println("ERRO: Não há reservas ativas ligadas a esse CPF.");
+                                pausar(input);
                             }
                         } else if (cpfCadastro.equals(hospede2.getCpf())) {
                             if(reserva2 != null && reserva2.getStatusReserva().equals("Ativa")) {
@@ -463,11 +453,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva2.setStatusReserva("Finalizada");
                                             quarto1.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -484,11 +475,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva2.setStatusReserva("Finalizada");
                                             quarto1.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -510,11 +502,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva2.setStatusReserva("Finalizada");
                                             quarto2.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -531,11 +524,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva2.setStatusReserva("Finalizada");
                                             quarto2.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -557,11 +551,12 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva2.setStatusReserva("Finalizada");
                                             quarto3.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
@@ -578,15 +573,16 @@ public class Main {
 
                                         if (opcaoPagamento == 1) {
                                             System.out.println("Pagamento realizado com sucesso!");
+                                            reserva2.setStatusReserva("Finalizada");
                                             quarto3.setStatusAtual("Disponivel");
-                                            pausar();
+                                            pausar(input);
                                         } else if (opcaoPagamento == 2) {
                                             System.out.println("Redirecionando...");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         } else {
                                             System.out.println("ERRO: Digite uma opção válida.");
-                                            pausar();
+                                            pausar(input);
                                             continue;
                                         }
 
@@ -595,12 +591,12 @@ public class Main {
                                 }
                                 reserva2.setStatusReserva("Finalizada");
                             } else {
-                                System.out.println("ERRO: Não à reservas ativas ligadas a esse CPF.");
-                                pausar();
+                                System.out.println("ERRO: Não há reservas ativas ligadas a esse CPF.");
+                                pausar(input);
                             }
                         } else {
-                            System.out.println("ERRO: Digite um cpf válido.");
-                            pausar();
+                            System.out.println("ERRO: O cpf inserido não esta em nosso banco de dados.");
+                            pausar(input);
                             continue;
                         }
                     break;
@@ -613,20 +609,20 @@ public class Main {
                         if (reserva1 != null && reserva1.getStatusReserva().equals("Ativa")) {
 
                             if (reserva1.getQuartoReservado() == 100) {
-                                quarto1.setStatusAtual("Disponível");
+                                quarto1.setStatusAtual("Disponivel");
                             } else if (reserva1.getQuartoReservado() == 101) {
-                                quarto2.setStatusAtual("Disponível");
+                                quarto2.setStatusAtual("Disponivel");
                             } else if (reserva1.getQuartoReservado() == 102) {
-                                quarto3.setStatusAtual("Disponível");
+                                quarto3.setStatusAtual("Disponivel");
                             }
-                            reserva1 = null;
-                            System.out.println("Cancelamento efetuado com sucesso...");
-                            pausar();
+                            reserva1.setStatusReserva("Cancelada");
+                            System.out.println("Cancelamento efetuado com sucesso!");
+                            pausar(input);
                             continue;
 
                         } else {
                             System.out.println("ERRO: Não existe uma reserva ativa para esse CPF.");
-                            pausar();
+                            pausar(input);
                             continue;
                         }
                     } else if (cpfCadastroCancelamento.equals(hospede2.getCpf())) {
@@ -634,30 +630,64 @@ public class Main {
                         if (reserva2 != null && reserva2.getStatusReserva().equals("Ativa")) {
 
                             if (reserva2.getQuartoReservado() == 100) {
-                                quarto1.setStatusAtual("Disponível");
+                                quarto1.setStatusAtual("Disponivel");
                             } else if (reserva2.getQuartoReservado() == 101) {
-                                quarto2.setStatusAtual("Disponível");
+                                quarto2.setStatusAtual("Disponivel");
                             } else if (reserva2.getQuartoReservado() == 102) {
-                                quarto3.setStatusAtual("Disponível");
+                                quarto3.setStatusAtual("Disponivel");
                             }
-                            reserva2 = null;
-                            System.out.println("Cancelamento efetuado com sucesso...");
-                            pausar();
+                            reserva2.setStatusReserva("Cancelada");
+                            System.out.println("Cancelamento efetuado com sucesso!");
+                            pausar(input);
                             continue;
 
                         } else {
                             System.out.println("ERRO: Não existe uma reserva ativa para esse CPF.");
-                            pausar();
+                            pausar(input);
                             continue;
                         }
 
                     } else {
                         System.out.println("ERRO: O cpf inserido não esta em nosso banco de dados.");
-                        pausar();
+                        pausar(input);
                         continue;
                     }
                 case 5:
-                    menuInterativo = 5;
+                    System.out.println("Digite o seu cpf cadastrado na plataforma: ");
+                    String cpfCadastroVizuReserva = input.next();
+
+                    if (cpfCadastroVizuReserva.equals(hospede1.getCpf())) {
+
+                        if (reserva1 != null && !(reserva1.getStatusReserva().isEmpty())) {
+                            System.out.println("\n---- RESERVA ----\n");
+                            System.out.println(reserva1);
+                            pausar(input);
+                        } else {
+                            System.out.println("ERRO: Nenhuma reserva foi realizada para esse cpf.");
+                            pausar(input);
+                        }
+
+                    } else if (cpfCadastroVizuReserva.equals(hospede2.getCpf())) {
+
+                        if (reserva2 != null && !(reserva2.getStatusReserva().isEmpty())) {
+                            System.out.println("\n---- RESERVA ----\n");
+                            System.out.println(reserva2);
+                            pausar(input);
+                        } else {
+                            System.out.println("ERRO: Nenhuma reserva foi realizada para esse cpf.");
+                            pausar(input);
+                        }
+
+                    } else {
+                        System.out.println("ERRO: O cpf inserido não esta em nosso banco de dados.");
+                        pausar(input);
+                        continue;
+                    }
+
+
+                    break;
+                case 6:
+                    menuInterativo = 6;
                     break;
                 default:
                     System.out.println("ERRO: Digite uma opção válida.");
