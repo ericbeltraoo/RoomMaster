@@ -111,13 +111,14 @@ public class Main {
 
         int menuInterativo = 0;
 
-        while (menuInterativo != 4) {
+        while (menuInterativo != 5) {
 
             System.out.println("---- MENU INTERATIVO ----");
             System.out.println("1 - Visualizar Quartos");
             System.out.println("2 - Criar Reserva");
             System.out.println("3 - Realizar Checkout");
-            System.out.println("4 - Sair");
+            System.out.println("4 - Cancelar Reserva");
+            System.out.println("5 - Sair");
             System.out.println("Digite uma das opções acima: ");
             menuInterativo = input.nextInt();
 
@@ -159,6 +160,7 @@ public class Main {
                                     } else if (reserva1.getQuartoReservado() == 102) {
                                         quarto3.setStatusAtual("Disponível");
                                     }
+                                    reserva1 = null;
                                     System.out.println("Cancelamento efetuado com sucesso...");
                                     pausar();
                                     continue;
@@ -215,6 +217,35 @@ public class Main {
                     } else if (cpfCadastrado.equals(hospede2.getCpf())) {
                         tempHospedeResp = hospede2.getNome();
 
+                        if (reserva2 != null && hospede2.getNome().equals(reserva2.getHospedeResponsavel())) {
+                            System.out.println("O cpf cadastrado ja tem uma reserva em andamento.");
+                            pausar();
+                            System.out.println("---- MENU INTERATIVO ----");
+                            System.out.println("1 - Cancelar reserva anterior");
+                            System.out.println("2 - Voltar ao menu principal");
+                            System.out.println("Selecione uma das opções acima: ");
+                            int opcaoMenuInterativo = input.nextInt();
+
+                            switch (opcaoMenuInterativo) {
+                                case 1:
+                                    if (reserva2.getQuartoReservado() == 100) {
+                                        quarto1.setStatusAtual("Disponível");
+                                    } else if (reserva2.getQuartoReservado() == 101) {
+                                        quarto2.setStatusAtual("Disponível");
+                                    } else if (reserva2.getQuartoReservado() == 102) {
+                                        quarto3.setStatusAtual("Disponível");
+                                    }
+                                    reserva2 = null;
+                                    System.out.println("Cancelamento efetuado com sucesso...");
+                                    pausar();
+                                    continue;
+                                case 2:
+                                    System.out.println("Redirecionando...");
+                                    pausar();
+                                    continue;
+                            }
+                        }
+
                         System.out.println("Digite o quarto que você deseja reservar: ( 100 / 101 / 102 )");
                         System.out.println("OBS: Verifique a disponibilidade do mesmo digitando 1 no menu iniciar.");
                         int tempQuartoReservado = input.nextInt();
@@ -262,8 +293,6 @@ public class Main {
 
                     break;
                 case 3:
-
-                    // fazer com que nao acesse sem ter criado uma reserva, verificar para cada cpf distinto
                         System.out.println("Digite o seu cpf cadastrado na plataforma: ");
                         String cpfCadastro = input.next();
 
@@ -576,7 +605,59 @@ public class Main {
                         }
                     break;
                 case 4:
-                    menuInterativo = 4;
+                    System.out.println("Digite o seu cpf cadastrado na plataforma: ");
+                    String cpfCadastroCancelamento = input.next();
+
+                    if (cpfCadastroCancelamento.equals(hospede1.getCpf())) {
+
+                        if (reserva1 != null && reserva1.getStatusReserva().equals("Ativa")) {
+
+                            if (reserva1.getQuartoReservado() == 100) {
+                                quarto1.setStatusAtual("Disponível");
+                            } else if (reserva1.getQuartoReservado() == 101) {
+                                quarto2.setStatusAtual("Disponível");
+                            } else if (reserva1.getQuartoReservado() == 102) {
+                                quarto3.setStatusAtual("Disponível");
+                            }
+                            reserva1 = null;
+                            System.out.println("Cancelamento efetuado com sucesso...");
+                            pausar();
+                            continue;
+
+                        } else {
+                            System.out.println("ERRO: Não existe uma reserva ativa para esse CPF.");
+                            pausar();
+                            continue;
+                        }
+                    } else if (cpfCadastroCancelamento.equals(hospede2.getCpf())) {
+
+                        if (reserva2 != null && reserva2.getStatusReserva().equals("Ativa")) {
+
+                            if (reserva2.getQuartoReservado() == 100) {
+                                quarto1.setStatusAtual("Disponível");
+                            } else if (reserva2.getQuartoReservado() == 101) {
+                                quarto2.setStatusAtual("Disponível");
+                            } else if (reserva2.getQuartoReservado() == 102) {
+                                quarto3.setStatusAtual("Disponível");
+                            }
+                            reserva2 = null;
+                            System.out.println("Cancelamento efetuado com sucesso...");
+                            pausar();
+                            continue;
+
+                        } else {
+                            System.out.println("ERRO: Não existe uma reserva ativa para esse CPF.");
+                            pausar();
+                            continue;
+                        }
+
+                    } else {
+                        System.out.println("ERRO: O cpf inserido não esta em nosso banco de dados.");
+                        pausar();
+                        continue;
+                    }
+                case 5:
+                    menuInterativo = 5;
                     break;
                 default:
                     System.out.println("ERRO: Digite uma opção válida.");
